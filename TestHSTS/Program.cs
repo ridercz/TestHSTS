@@ -49,7 +49,8 @@ namespace TestHSTS {
         public static void Batch(
             [Required(Description = "Text file containing HTTPS URL to test")] string fileName,
             [Optional(5000, "t", Description = "Request timeout in ms")] int timeout,
-            [Optional(false, "g", "Use GET method for tests instead of POST")] bool useGetMethod) {
+            [Optional(false, "g", "Use GET method for tests instead of POST")] bool useGetMethod,
+            [Optional(false, "f", "Display full URLs instead of host names only")] bool useFullUrls) {
 
             if (fileName == null) throw new ArgumentNullException("fileName");
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "fileName");
@@ -80,7 +81,13 @@ namespace TestHSTS {
 
             // Test all the URLs
             foreach (var testUri in validUrls) {
-                Console.Write("{0}", testUri);
+                if (useFullUrls) {
+                    Console.Write(testUri);
+                }
+                else {
+                    Console.Write(testUri.Host);
+                }
+
                 string message;
                 var result = TestSingleUrl(testUri, timeout, useGetMethod, out message);
                 if (result) {
