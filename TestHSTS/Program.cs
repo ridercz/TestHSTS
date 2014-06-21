@@ -90,7 +90,7 @@ namespace TestHSTS {
                     Console.WriteLine("\tno");
                 }
                 else {
-                    Console.WriteLine("error\t{0}", message);
+                    Console.WriteLine("\terror\t{0}", message);
                 }
             }
 
