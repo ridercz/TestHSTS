@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHSTS", "TestHSTS\TestHSTS.csproj", "{6FBAB640-500D-454C-8FEE-ED8F8A83710F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docs", ".docs", "{066EDFDC-09A6-49FF-AA61-E8076E58B4E5}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FBAB640-500D-454C-8FEE-ED8F8A83710F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FBAB640-500D-454C-8FEE-ED8F8A83710F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FBAB640-500D-454C-8FEE-ED8F8A83710F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FBAB640-500D-454C-8FEE-ED8F8A83710F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
