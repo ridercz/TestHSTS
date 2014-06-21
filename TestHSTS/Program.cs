@@ -152,8 +152,10 @@ namespace TestHSTS {
             }
             catch (WebException wex) {
                 rp = wex.Response as HttpWebResponse;
-                message = wex.Message;
-                return false;
+                if (rp == null) {
+                    message = wex.Message;
+                    return false;
+                }
             }
 
             // Get Strict-Transport-Security header
