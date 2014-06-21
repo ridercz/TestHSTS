@@ -20,7 +20,8 @@ namespace TestHSTS {
         [Action("Test single URL")]
         public static void Test(
             [Required(Description = "HTTPS URL to test")] string address,
-            [Optional(5000, "t", Description = "Request timeout in ms")] int timeout) {
+            [Optional(5000, "t", Description = "Request timeout in ms")] int timeout,
+            [Optional(false, "g", "Use GET method for tests instead of POST")] bool useGetMethod) {
 
             if (address == null) throw new ArgumentNullException("address");
             if (string.IsNullOrWhiteSpace(address)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "address");
@@ -30,7 +31,7 @@ namespace TestHSTS {
 
             Console.Write("Testing {0}...", testUri);
             string message;
-            var result = TestSingleUrl(testUri, timeout, out message);
+            var result = TestSingleUrl(testUri, timeout, useGetMethod, out message);
             if (result) {
                 Console.WriteLine("OK");
                 Console.WriteLine("STS header: {0}", message);
@@ -47,7 +48,8 @@ namespace TestHSTS {
         [Action("Test multiple URLs from file")]
         public static void Batch(
             [Required(Description = "Text file containing HTTPS URL to test")] string fileName,
-            [Optional(5000, "t", Description = "Request timeout in ms")] int timeout) {
+            [Optional(5000, "t", Description = "Request timeout in ms")] int timeout,
+            [Optional(false, "g", "Use GET method for tests instead of POST")] bool useGetMethod) {
 
             if (fileName == null) throw new ArgumentNullException("fileName");
             if (string.IsNullOrWhiteSpace(fileName)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "fileName");
@@ -80,7 +82,7 @@ namespace TestHSTS {
             foreach (var testUri in validUrls) {
                 Console.Write("{0}", testUri);
                 string message;
-                var result = TestSingleUrl(testUri, timeout, out message);
+                var result = TestSingleUrl(testUri, timeout, useGetMethod, out message);
                 if (result) {
                     Console.WriteLine("\tyes\t{0}", message);
                 }
@@ -122,7 +124,7 @@ namespace TestHSTS {
         /// <returns>Returns <c>true</c> if <c>Strict-Transport-Security</c> header is present, <c>false</c> otherwise.</returns>
         /// <exception cref="System.ArgumentNullException">url</exception>
         /// <exception cref="System.ArgumentException">Only HTTPS scheme is supported.;url</exception>
-        private static bool TestSingleUrl(Uri url, int timeout, out string message) {
+        private static bool TestSingleUrl(Uri url, int timeout, bool useGetMethod, out string message) {
             // Validate arguments
             if (url == null) throw new ArgumentNullException("url");
             if (!url.Scheme.Equals(Uri.UriSchemeHttps)) throw new ArgumentException("Only HTTPS scheme is supported.", "url");
@@ -131,7 +133,7 @@ namespace TestHSTS {
             var rq = HttpWebRequest.Create(url) as HttpWebRequest;
             rq.UserAgent = "Altairis TestHSTS - https://github.com/ridercz/TestHSTS/";
             rq.Timeout = timeout;
-            rq.Method = "HEAD";
+            rq.Method = useGetMethod ? "GET" : "HEAD";
 
             // Accept all certificates (including expired, untrusted...)
             rq.ServerCertificateValidationCallback = (x1, x2, x3, x4) => true;
